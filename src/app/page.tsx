@@ -4,7 +4,7 @@ import { ArchiveCard } from "@/components/archive-card";
 import { WalletControl } from "@/components/wallet-control";
 import { getExplore } from "@/server/repositories/monsters";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   const latest = await getExplore({ limit: 6 });

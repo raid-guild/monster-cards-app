@@ -4,6 +4,7 @@ import { ArchiveCard } from "@/components/archive-card";
 import { getExplore } from "@/server/repositories/monsters";
 
 export const metadata: Metadata = { title: "The Bestiary" };
+export const dynamic = "force-dynamic";
 
 export default async function ExplorePage({ searchParams }: { searchParams: Promise<{ q?: string; sort?: string; cursor?: string }> }) {
   const filters = await searchParams;
