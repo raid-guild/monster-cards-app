@@ -31,7 +31,34 @@ async function claimJob(): Promise<ClaimedJob | null> {
     update monster_app.generation_jobs j set
       status = 'running', checkpoint = 'verifying_ownership', locked_by = ${workerId}, locked_at = now(),
       started_at = coalesce(started_at, now()), attempt_count = attempt_count + 1, updated_at = now()
-    from next_job where j.id = next_job.id returning j.*
+    from next_job where j.id = next_job.id returning
+      j.id,
+      j.chain_id as "chainId",
+      j.contract_address as "contractAddress",
+      j.token_id as "tokenId",
+      j.style_slug as "styleSlug",
+      j.style_version_id as "styleVersionId",
+      j.requested_by_wallet as "requestedByWallet",
+      j.idempotency_key as "idempotencyKey",
+      j.job_kind as "jobKind",
+      j.replacement_for_visualization_id as "replacementForVisualizationId",
+      j.status,
+      j.checkpoint,
+      j.attempt_count as "attemptCount",
+      j.max_attempts as "maxAttempts",
+      j.locked_by as "lockedBy",
+      j.locked_at as "lockedAt",
+      j.provider_request_id as "providerRequestId",
+      j.resolved_prompt as "resolvedPrompt",
+      j.resolved_prompt_hash as "resolvedPromptHash",
+      j.token_snapshot_id as "tokenSnapshotId",
+      j.error_code as "errorCode",
+      j.error_message_safe as "errorMessageSafe",
+      j.error_detail_private as "errorDetailPrivate",
+      j.queued_at as "queuedAt",
+      j.started_at as "startedAt",
+      j.completed_at as "completedAt",
+      j.updated_at as "updatedAt"
   `);
   return (result[0] as ClaimedJob | undefined) ?? null;
 }
