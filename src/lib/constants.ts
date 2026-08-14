@@ -1,4 +1,4 @@
-import { defineChain } from "viem";
+import { mainnet } from "viem/chains";
 
 export const MONSTERS_CHAIN_ID = 1;
 export const MONSTERS_CONTRACT = "0xecb9b2ea457740fbde58c758e4c574834224413e" as const;
@@ -7,13 +7,7 @@ export const OPENSEA_COLLECTION_URL = "https://opensea.io/collection/monsters-7v
 export const ETHERSCAN_CONTRACT_URL = `https://etherscan.io/token/${MONSTERS_CONTRACT}`;
 export const RAIDGUILD_URL = "https://www.raidguild.org/";
 
-export const ethereumMainnet = defineChain({
-  id: 1,
-  name: "Ethereum",
-  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
-  rpcUrls: { default: { http: ["https://cloudflare-eth.com"] } },
-  blockExplorers: { default: { name: "Etherscan", url: "https://etherscan.io" } },
-});
+export const ethereumMainnet = mainnet;
 
 export const monstersAbi = [
   {

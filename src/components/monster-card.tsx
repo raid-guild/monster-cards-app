@@ -7,12 +7,17 @@ import { cn } from "@/lib/utils";
 export function MonsterCard({ monster }: { monster: MonsterRecord }) {
   const [original, setOriginal] = useState(!monster.visualization);
   const canFlip = Boolean(monster.visualization);
+  const frontImage = monster.visualization?.cardUrl ?? monster.originalImageUrl;
+  const frontAlt = monster.visualization
+    ? `AI visualization of ${monster.sheetName}, ${monster.monsterName}.`
+    : `Original on-chain trait sheet for ${monster.monsterName}.`;
+
   return (
     <div className="monster-card-wrap">
       <div className={cn("monster-card-flip", original && "show-original")}>
-        <div className="monster-card-face monster-card-front">
+        <div className={cn("monster-card-face monster-card-front", !monster.visualization && "monster-card-original-front")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={monster.visualization?.cardUrl ?? monster.originalImageUrl} alt={`AI visualization of ${monster.sheetName}, ${monster.monsterName}.`} />
+          <img src={frontImage} alt={frontAlt} />
         </div>
         <div className="monster-card-face monster-card-back">
           <p>ORIGINAL ON-CHAIN SHEET</p>

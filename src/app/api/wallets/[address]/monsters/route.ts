@@ -12,7 +12,11 @@ export async function GET(_: Request, { params }: { params: Promise<{ address: s
     const holdings = await readHoldings(address);
     const tokens = await joinVisualizationState(holdings.monsters);
     return ok({ address: holdings.address, chainId: 1, readAt: new Date().toISOString(), tokens });
-  } catch {
+  } catch (error) {
+    console.error("wallet_holdings_read_failed", {
+      address,
+      error: error instanceof Error ? error.message : String(error),
+    });
     if (env().USE_DEMO_DATA) {
       return ok({ address, chainId: 1, readAt: new Date().toISOString(), tokens: demoMonsters });
     }
